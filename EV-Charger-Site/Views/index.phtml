@@ -1,0 +1,70 @@
+<?php require('Views/template/header.phtml') ?>
+<!--CSS link for leaflet.js map only-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""/>
+
+<!--HTML for index/home page-->
+<div class="container-fluid">
+    <!--Will display if user is not logged in(display is true)-->
+    <?php if($view->display):?>
+    <h4>Please login to search for a charge point!!</h4>
+    <?php endif;?>
+    <!--If user log in credentials are incorrect will display incorrect messge(incorrect is true)-->
+    <?php if($view->incorrect){
+        echo '<h4 id="incorrectMsg">' . $view->incorrectMsg . '</h4>';
+    } ?>
+    <!--Will display if user is  logged in(display is false)-->
+    <?php if(!$view->display): ?>
+    <h4 id="searchLabel">Enter a City to search for a charge point: </h4>
+    <!--form for searching for a charge point in a specific city-->
+    <form class="d-flex" method="post" action=" " autocomplete="off">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchInput" onkeyup="showHint(this.value)">
+        <input class="btn btn-outline-success" value="Search" type="submit" name="searchBtn"/>
+    </form>
+    <div id="txtHint"></div> <!--displays the suggestions-->
+
+    <h6 id="error"></h6> <!--displays the error message when location isnt enabled-->
+    <div id='map'></div>
+                <?php
+                //prints the JS code
+                echo $view->leafletLink;
+                echo $view->mapAndMarkers;
+                ?>
+    <?php endif; ?>
+</div>
+
+<script> //script for the live search
+    function showHint(str){
+        if(str.length == 0){
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        }
+        else{
+            let xmlhttp = new XMLHttpRequest(); // creates new XMLHttpRequest Object
+
+            xmlhttp.onreadystatechange = function (){ //checks if ready state and status is valid
+                if(this.readyState == 4 && this.status == 200){
+                    let uic = document.getElementById("txtHint");
+                    if(this.response != "no suggestions"){
+                        uic.innerHTML = "Suggestions:<br/>" ;
+                        let chargePoint = JSON.parse(this.responseText);//parses JSON results into array
+                        //console.log(chargePoint);
+                        chargePoint.forEach(function (obj){ //goes through JSON and adds each result for user to see
+                            uic.innerHTML += "<div><a href='#' style='text-decoration:none; color: black;'>" +
+                                "<th scope='row'><img height='75' width='75' src='images/" + obj.profile_pic +"' class='img-fluid img-thumbnail'></th>" +
+                                "<td><p  style='font-weight: bold; display: inline-flex; margin-left: 65px;'> " + obj._username +"</p></td>" +
+                                "<td><p style='font-weight: bold; display: inline-flex; margin-left: 20px;'> " + obj.city +"</p></td>" +
+                                "<td><p style='font-weight: bold; display: inline-flex; margin-left: 20px;'> " + obj.address +"</p></td>" +
+                                "<td><p style='font-weight: bold; display: inline-flex; margin-left: 20px;'> " + obj.postcode +"</p></td>" +
+                                "<td><p style='font-weight: bold; display: inline-flex; margin-left: 10px;'> £" + obj.cost +"perHour</p></td></a></tr><div>";
+                        });
+                    }
+                }
+            };
+            xmlhttp.open("GET", "getHint.php?q=" + str + "&token=<?php echo $token; ?>", true); //open request
+            xmlhttp.send(); //sends request
+        }
+    }
+</script>
+<?php require('template/footer.phtml') ?>

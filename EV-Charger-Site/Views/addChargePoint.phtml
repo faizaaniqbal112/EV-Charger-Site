@@ -1,0 +1,44 @@
+<?php require('template/header.phtml') ?>
+<!--HTML for adding a charge point-->
+    <div class="container-fluid">
+        <!--Display error message if error is true(can't add a charge point)-->
+        <?php if($view->error){
+            echo '<h4 id="errorMsg">' . $view->errorMsg . '</h4>';
+        } ?>
+        <!--Form for inputting data about the charge point-->
+        <form method="post" action=" ">
+            <div class="form-group col-md-6">
+                <label>Address</label>
+                <input type="text" class="form-control" name="address" placeholder="1234 Main St">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Postcode</label>
+                    <input type="text" class="form-control" name="postcode">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Latitude</label>
+                    <input type="text" class="form-control" name="lat">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Longitude</label>
+                    <input type="text" class="form-control" name="lng">
+                </div>
+                <div class="input-group col-mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">£perHour</span>
+                    </div>
+                    <input type="text" class="form-control" name="cost">
+                </div>
+            </div>
+            <input name="addBtn" value="Add " type="submit" class="btn btn-outline-success btn-block mb-4 " id="addBtn"/>
+        </form>
+    </div>
+<br>
+<br>
+<br>
+<?php require('template/footer.phtml') ?>

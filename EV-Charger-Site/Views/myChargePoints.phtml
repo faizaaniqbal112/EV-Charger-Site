@@ -1,0 +1,37 @@
+<?php require('template/header.phtml') ?>
+<!--HTML for viewing logged in user's charge points-->
+<div class="container-fluid">
+    <table class="table">
+        <thead> <!-- Display the headings for the table-->
+            <tr>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Postcode</th>
+                <th scope="col">Lat</th>
+                <th scope="col">Lng</th>
+                <th scope="col">Cost(£perHour)</th>
+                <th scope="col"> </th>
+            </tr>
+        </thead>
+        <tbody> <!-- this will insert DB item into table view -->
+        <tbody>
+        <?php
+        foreach ($view->chargePointDataSet as $chargePointData){
+            echo "<tr>";
+            echo "<th>" . $chargePointData->getAddress()  . "</th>";
+            echo "<th>" . $chargePointData->getCity()  . "</th>";
+            echo "<th>" . $chargePointData->getPostcode()  . "</th>";
+            echo "<th>" . $chargePointData->getLat()  . "</th>";
+            echo "<th>" . $chargePointData->getLng()  . "</th>";
+            echo "<th>" . $chargePointData->getCost()  . "</th>";
+            ?>
+            <form method='post' action=' '> <!--deletes the item from database database-->
+            <td> <input name="deleteBtn" value="Delete" type="submit" class="btn btn-outline-success btn-block mb-4" /></td>
+            </form>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+</div>
+<?php require('template/footer.phtml') ?>

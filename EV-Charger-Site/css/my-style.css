@@ -1,0 +1,71 @@
+main > .container {
+    padding: 60px 15px 0;
+}
+
+#title {
+    margin-top: 12px;
+    background-color: #fff;
+    color: #000;
+
+}
+
+#content {
+    background-color: #fff;
+    border-top: solid 6px chartreuse;
+
+}
+
+#footer {
+    /*margin_top: 20px;
+    text-align: center;
+    background-color: #000;
+    color: #fff; */
+}
+.nav-item{
+    padding-left: 10px;
+}
+#searchLabel{
+    padding-left: 20px;
+}
+
+.form-group{
+    padding-bottom: 5px;
+}
+
+.input-group{
+    padding-bottom: 5px;
+}
+
+#dropdownBtn{
+    background: chartreuse;
+}
+#registerBtn{
+    background: chartreuse;
+}
+#signInBtn{
+    background: chartreuse;
+}
+
+#incorrectMsg{
+    color: red;
+}
+
+#errorMsg{
+    color: red;
+}
+
+.a{
+    text-decoration: none;
+    color: black;
+}
+
+#map{
+    height: 600px;
+    width: 800px;
+    margin-top: 10px;
+}
+
+#error{
+    margin-top: 10px;
+
+}
